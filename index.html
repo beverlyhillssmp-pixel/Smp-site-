@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beverly Hills SMP Studio — Sama Jafari</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--blk:#080808;--blk2:#111;--blk3:#1a1a1a;--gold:#c9a84c;--gold2:#e4c97a;--gold3:#9a7530;--beige:#e8ddd0;--muted:#6e6860;--white:#f4ede4;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--blk);color:var(--white);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--blk);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity 0.6s ease;}
+#loader.hide{opacity:0;pointer-events:none;}
+.ld-logo{font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:0.18em;color:var(--gold);opacity:0;animation:fadeUp 0.7s ease 0.3s forwards;}
+.ld-sub{font-size:9px;letter-spacing:0.45em;color:var(--muted);text-transform:uppercase;opacity:0;animation:fadeUp 0.7s ease 0.6s forwards;}
+.ld-bar{width:140px;height:1px;background:var(--blk3);overflow:hidden;opacity:0;animation:fadeUp 0.5s ease 0.8s forwards;}
+.ld-fill{height:100%;background:var(--gold);width:0;animation:fill 1.2s ease 1s forwards;}
+@keyframes fill{to{width:100%;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,8,0.96),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.12em;color:var(--white);}
+.logo span{color:var(--gold);font-style:italic;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-book{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,0.55);padding:10px 22px;text-decoration:none;transition:all 0.3s;}
+.nav-book:hover{background:var(--gold);color:var(--blk);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:140px 60px 80px;position:relative;z-index:2;animation:fadeUp 1s ease 2.2s both;}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:30px;}
+.eyebrow-line{width:36px;height:1px;background:var(--gold);}
+.eyebrow-text{font-size:10px;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,88px);font-weight:300;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero-h1 em{font-style:italic;color:var(--gold2);display:block;}
+.hero-role{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--muted);margin-bottom:30px;}
+.hero-desc{font-size:13px;line-height:2;color:var(--muted);max-width:420px;margin-bottom:48px;}
+.hero-btns{display:flex;gap:20px;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--blk);font-size:10px;letter-spacing:0.25em;text-transform:uppercase;padding:14px 34px;text-decoration:none;font-weight:500;transition:all 0.3s;}
+.btn-gold:hover{background:var(--gold2);}
+.btn-ghost{border:1px solid rgba(201,168,76,0.4);color:var(--beige);font-size:10px;letter-spacing:0.25em;text-transform:uppercase;padding:14px 34px;text-decoration:none;transition:all 0.3s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-right{position:relative;overflow:hidden;animation:fadeUp 1.2s ease 2.4s both;}
+.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:brightness(0.8);}
+.hero-right-veil{position:absolute;inset:0;background:linear-gradient(to right,var(--blk) 0%,transparent 35%),linear-gradient(to top,rgba(8,8,8,0.7) 0%,transparent 55%);}
+.hero-stats{position:absolute;bottom:44px;right:44px;display:flex;gap:36px;}
+.hs-num{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--gold2);line-height:1;}
+.hs-lbl{font-size:9px;letter-spacing:0.26em;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:20px;padding:0 60px;}
+.div-line{flex:1;height:1px;background:linear-gradient(to right,rgba(201,168,76,0.3),transparent);}
+.div-line.r{background:linear-gradient(to left,rgba(201,168,76,0.3),transparent);}
+.div-diamond{width:6px;height:6px;border:1px solid var(--gold);transform:rotate(45deg);flex-shrink:0;}
+
+/* SECTIONS common */
+.sec-wrap{padding:100px 60px;}
+.sec-wrap.dark{background:var(--blk2);}
+.sec-tag{font-size:10px;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,56px);font-weight:300;line-height:1.1;color:var(--white);}
+.sec-h em{font-style:italic;color:var(--gold2);}
+.sec-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;}
+.sec-link{font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:10px;transition:color 0.3s;}
+.sec-link::after{content:'→';transition:transform 0.3s;}
+.sec-link:hover{color:var(--gold);}
+.sec-link:hover::after{transform:translateX(4px);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-imgs{position:relative;height:540px;}
+.ai-main{position:absolute;top:0;left:0;right:60px;bottom:60px;overflow:hidden;}
+.ai-main img{width:100%;height:100%;object-fit:cover;filter:brightness(0.85);}
+.ai-accent{position:absolute;bottom:0;right:0;width:190px;height:190px;overflow:hidden;border:2px solid rgba(201,168,76,0.22);}
+.ai-accent img{width:100%;height:100%;object-fit:cover;filter:brightness(0.82);}
+.ai-badge{position:absolute;top:20px;left:20px;background:rgba(8,8,8,0.9);border:1px solid rgba(201,168,76,0.3);padding:10px 16px;backdrop-filter:blur(6px);}
+.ai-badge-txt{font-size:9px;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;}
+.about-body{font-size:13px;line-height:2.05;color:var(--muted);margin:24px 0;}
+.skills-list{display:flex;flex-direction:column;}
+.skill-row{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(201,168,76,0.1);}
+.skill-dot{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex-shrink:0;}
+.skill-name{font-size:12px;letter-spacing:0.12em;color:var(--beige);text-transform:uppercase;flex:1;}
+.skill-val{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold3);}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:60px;}
+.svc-card{background:var(--blk3);padding:40px 28px;position:relative;overflow:hidden;cursor:default;border-top:1px solid transparent;transition:border-color 0.4s,background 0.3s;}
+.svc-card:hover{background:#1e1c18;border-color:var(--gold);}
+.svc-num{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold3);margin-bottom:28px;letter-spacing:0.1em;}
+.svc-bar{width:28px;height:1px;background:var(--gold);margin-bottom:20px;transition:width 0.4s;}
+.svc-card:hover .svc-bar{width:44px;}
+.svc-name{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--white);margin-bottom:14px;line-height:1.25;}
+.svc-desc{font-size:11px;line-height:1.85;color:var(--muted);}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:60px;}
+.gal-card{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;}
+.gal-card.tall{aspect-ratio:3/4;}
+.gal-card img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8) contrast(1.05);transition:transform 0.6s ease,filter 0.4s;}
+.gal-card:hover img{transform:scale(1.05);filter:brightness(0.55);}
+.gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.88) 0%,transparent 55%);opacity:0;transition:opacity 0.4s;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;}
+.gal-card:hover .gal-overlay{opacity:1;}
+.gal-type{font-size:9px;letter-spacing:0.32em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.gal-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+
+/* PROCESS */
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-left:1px solid rgba(201,168,76,0.1);}
+.step{padding:44px 34px;border-right:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);position:relative;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;color:rgba(201,168,76,0.08);line-height:1;position:absolute;top:28px;right:24px;}
+.step-bar{width:26px;height:1px;background:var(--gold);margin-bottom:18px;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white);margin-bottom:12px;}
+.step-desc{font-size:12px;line-height:1.9;color:var(--muted);}
+
+/* IN ACTION */
+.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:60px;}
+.act-card{position:relative;overflow:hidden;aspect-ratio:3/4;}
+.act-card img{width:100%;height:100%;object-fit:cover;object-position:top;filter:brightness(0.78) saturate(0.9);transition:transform 0.6s;}
+.act-card:hover img{transform:scale(1.04);}
+.act-num{position:absolute;bottom:14px;left:14px;font-family:'Cormorant Garamond',serif;font-size:40px;color:rgba(201,168,76,0.15);line-height:1;}
+
+/* CTA */
+.cta-sec{padding:120px 60px;text-align:center;position:relative;overflow:hidden;}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 90% at center,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none;}
+.cta-h{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,72px);font-weight:300;line-height:1.15;color:var(--white);margin:12px 0 18px;}
+.cta-h em{font-style:italic;color:var(--gold2);}
+.cta-sub{font-size:13px;color:var(--muted);margin-bottom:50px;letter-spacing:0.06em;}
+.cta-contacts{display:flex;justify-content:center;gap:2px;flex-wrap:wrap;margin-bottom:48px;}
+.cta-card{background:var(--blk2);padding:28px 36px;}
+.cta-card-lbl{font-size:9px;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.cta-card-val{font-size:14px;color:var(--white);}
+
+/* FOOTER */
+footer{background:#040404;border-top:1px solid rgba(201,168,76,0.1);padding:50px 60px 30px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:50px;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);margin-bottom:6px;}
+.footer-logo-sub{font-size:9px;letter-spacing:0.32em;color:var(--muted);text-transform:uppercase;}
+.footer-tagline{font-size:12px;color:var(--muted);line-height:1.8;margin-top:18px;}
+.footer-col-ttl{font-size:9px;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:12px;transition:color 0.3s;}
+.footer-links a:hover{color:var(--beige);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,0.05);}
+.footer-copy{font-size:10px;color:var(--muted);}
+.footer-motto{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--gold3);}
+
+
+/* NEW WORK / VIDEOS */
+.vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:60px;}
+.vid-card{background:var(--blk2);display:flex;flex-direction:column;}
+.vid-card video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;}
+.vid-cap{padding:22px 24px 26px;border-top:1px solid rgba(201,168,76,0.18);}
+.vid-cap .gal-title{margin-bottom:8px;}
+.vid-desc{font-size:12px;line-height:1.85;color:var(--muted);}
+.vid-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,40px);font-weight:300;color:var(--white);margin:80px 0 0;}
+.vid-sub em{font-style:italic;color:var(--gold2);}
+.vid-duo{display:grid;grid-template-columns:2fr 1fr;gap:3px;margin-top:40px;}
+.vid-photo{position:relative;flex:1;background:#000;}
+.vid-photo img{display:block;width:100%;height:100%;object-fit:cover;}
+.vid-lbl{position:absolute;top:16px;font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold2);background:rgba(8,8,8,0.82);border:1px solid rgba(201,168,76,0.3);padding:7px 12px;}
+.vid-lbl.l{left:16px;}.vid-lbl.r{left:calc(50% + 16px);}
+.vid-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.4;color:var(--beige);margin-bottom:8px;}
+.studio-band{display:grid;grid-template-columns:1fr 1fr;margin-top:3px;background:var(--blk2);}
+.studio-band img{display:block;width:100%;height:100%;max-height:640px;object-fit:cover;filter:grayscale(1) brightness(0.9);}
+.studio-txt{padding:60px 56px;display:flex;flex-direction:column;justify-content:center;}
+.studio-txt .about-body{margin:18px 0 0;}
+.studio-addr{font-size:10px;letter-spacing:0.26em;color:var(--gold);text-transform:uppercase;margin-top:26px;}
+.chair-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:40px;}
+.chair-card{position:relative;overflow:hidden;aspect-ratio:4/5;background:#000;}
+.chair-card img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(0.92);transition:transform 0.6s;}
+.chair-card:hover img{transform:scale(1.04);}
+.vid-cta{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:60px;}
+@media(max-width:900px){
+  .chair-grid{grid-template-columns:1fr;}
+  .vid-grid,.vid-duo,.studio-band{grid-template-columns:1fr;}
+  .vid-grid{max-width:440px;margin-left:auto;margin-right:auto;}
+  .studio-band img{max-height:440px;}
+  .studio-txt{padding:36px 24px;}
+}
+
+/* CONTACT BAR */
+.cbar{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;gap:10px;}
+.cbar a{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;font-weight:500;box-shadow:0 6px 20px rgba(0,0,0,0.45);}
+.cbar svg{width:16px;height:16px;flex-shrink:0;}
+.cb-text{background:var(--gold);color:var(--blk);}
+.cb-text:hover{background:var(--gold2);}
+.cb-call,.cb-ig{background:rgba(17,17,17,0.94);color:var(--beige);border:1px solid rgba(201,168,76,0.45);}
+.cb-call:hover,.cb-ig:hover{border-color:var(--gold);color:var(--gold2);}
+@media(max-width:900px){
+  .cbar{left:0;right:0;bottom:0;flex-direction:row;gap:0;}
+  .cbar a{flex:1;justify-content:center;padding:16px 6px;font-size:10px;letter-spacing:0.12em;box-shadow:none;border:0 !important;border-top:1px solid rgba(201,168,76,0.35) !important;}
+  .cbar a+a{border-left:1px solid rgba(201,168,76,0.25) !important;}
+  footer{padding-bottom:90px;}
+}
+
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .hero-left{padding:110px 24px 60px;}
+  .sec-wrap{padding:60px 24px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-imgs{height:280px;}
+  .services-grid{grid-template-columns:1fr 1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .process-steps{grid-template-columns:1fr 1fr;}
+  .action-grid{grid-template-columns:1fr 1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .divider{padding:0 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo">Beverly Hills SMP</div>
+  <div class="ld-sub">Precision · Artistry · Confidence</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">BH <span>SMP Studio</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:3102668138" class="nav-book">310.266.8138</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Beverly Hills, California</span>
+    </div>
+    <h1 class="hero-h1">
+      Beverly Hills
+      <em>SMP Studio</em>
+    </h1>
+    <div class="hero-role">Luxury Scalp Micropigmentation · Sama Jafari</div>
+    <p class="hero-desc">Natural-looking hair restoration designed with precision, artistry, and confidence. By appointment only in Beverly Hills.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">Book Consultation</a>
+      <a href="#gallery" class="btn-ghost">View Results</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="hero.jpg" alt="Sama Jafari performing SMP">
+    <div class="hero-right-veil"></div>
+    <div class="hero-stats">
+      <div><div class="hs-num">15+</div><div class="hs-lbl">Years in Beauty</div></div>
+      <div><div class="hs-num">SMP</div><div class="hs-lbl">Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<div style="margin:80px 0 0;" class="divider"><div class="div-line r"></div><div class="div-diamond"></div><div class="div-line"></div></div>
+
+<!-- ABOUT -->
+<section class="sec-wrap" id="about">
+  <div class="about-grid">
+    <div class="about-imgs">
+      <div class="ai-main"><img loading="lazy" src="img-1.jpg" alt="Sama working"></div>
+      <div class="ai-accent"><img loading="lazy" src="img-2.jpg" alt="SMP session"></div>
+      <div class="ai-badge"><div class="ai-badge-txt">Sama Jafari · SMP Artist</div></div>
+    </div>
+    <div>
+      <div class="sec-tag">About the Artist</div>
+      <h2 class="sec-h">Where Beauty Meets <em>Precision</em></h2>
+      <p class="about-body">Sama Jafari is a certified Scalp Micropigmentation artist based in Beverly Hills with over 15 years of experience as a hairstylist and makeup artist. Her deep understanding of facial structure, color theory, and skin tone analysis gives every client results that are natural, precise, and undetectable.</p>
+      <p class="about-body">SMP is the natural evolution of a career devoted to helping people look and feel their absolute best.</p>
+      <div class="skills-list">
+        <div class="skill-row"><div class="skill-dot"></div><span class="skill-name">Scalp Micropigmentation</span><span class="skill-val">Certified</span></div>
+        <div class="skill-row"><div class="skill-dot"></div><span class="skill-name">Hairline Design</span><span class="skill-val">Expert</span></div>
+        <div class="skill-row"><div class="skill-dot"></div><span class="skill-name">Hairstyling</span><span class="skill-val">15 yrs</span></div>
+        <div class="skill-row"><div class="skill-dot"></div><span class="skill-name">Makeup Artistry</span><span class="skill-val">15 yrs</span></div>
+        <div class="skill-row"><div class="skill-dot"></div><span class="skill-name">Color &amp; Pigment Theory</span><span class="skill-val">Expert</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="div-line r"></div><div class="div-diamond"></div><div class="div-line"></div></div>
+
+<!-- SERVICES -->
+<section class="sec-wrap dark" id="services">
+  <div class="sec-header">
+    <div><div class="sec-tag">What We Offer</div><h2 class="sec-h">Our <em>Services</em></h2></div>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card"><div class="svc-num">01</div><div class="svc-bar"></div><div class="svc-name">Hairline Restoration</div><div class="svc-desc">Custom natural hairline design crafted to complement your unique facial structure and features.</div></div>
+    <div class="svc-card"><div class="svc-num">02</div><div class="svc-bar"></div><div class="svc-name">Density Fill</div><div class="svc-desc">Creates the appearance of thicker, fuller hair in thinning areas with seamless pigment placement.</div></div>
+    <div class="svc-card"><div class="svc-num">03</div><div class="svc-bar"></div><div class="svc-name">Alopecia SMP</div><div class="svc-desc">Specialized treatment restoring the appearance of a full head of hair for alopecia clients.</div></div>
+    <div class="svc-card"><div class="svc-num">04</div><div class="svc-bar"></div><div class="svc-name">Scar Camouflage</div><div class="svc-desc">Softens and conceals scalp scars from hair transplants, burns, and injuries with natural precision.</div></div>
+  </div>
+</section>
+
+<div class="divider" style="margin-top:0;"><div class="div-line r"></div><div class="div-diamond"></div><div class="div-line"></div></div>
+
+<!-- GALLERY -->
+<section class="sec-wrap" id="gallery">
+  <div class="sec-header">
+    <div><div class="sec-tag">Client Transformations</div><h2 class="sec-h">Before &amp; <em>After</em></h2></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal-card">
+      <img loading="lazy" src="img-3.jpg" alt="Full SMP Result">
+      <div class="gal-overlay"><div class="gal-type">Before &amp; After</div><div class="gal-title">Full Head SMP</div></div>
+    </div>
+    <div class="gal-card">
+      <img loading="lazy" src="img-4.jpg" alt="Hairline Restoration">
+      <div class="gal-overlay"><div class="gal-type">Before &amp; After</div><div class="gal-title">Hairline Restoration</div></div>
+    </div>
+    <div class="gal-card">
+      <img loading="lazy" src="img-5.jpg" alt="SMP Full Coverage">
+      <div class="gal-overlay"><div class="gal-type">Before &amp; After</div><div class="gal-title">Full Coverage SMP</div></div>
+    </div>
+    <div class="gal-card">
+      <img loading="lazy" src="img-6.jpg" alt="Density &amp; Scar">
+      <div class="gal-overlay"><div class="gal-type">Before &amp; After</div><div class="gal-title">Density &amp; Scar Work</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="div-line r"></div><div class="div-diamond"></div><div class="div-line"></div></div>
+
+<!-- NEW WORK / VIDEOS -->
+<section class="sec-wrap dark" id="videos">
+  <div class="sec-header">
+    <div><div class="sec-tag">New Work</div><h2 class="sec-h">Real Results, <em>Real Confidence</em></h2></div>
+  </div>
+  <div class="vid-grid">
+    <div class="vid-card">
+      <video src="before-after.mp4" poster="before-after.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="vid-cap"><div class="gal-type">Before &amp; After</div><div class="gal-title">Fuller Part, Instantly</div><p class="vid-desc">Women's density SMP: the scalp showing through the part is softened for a thicker, natural look.</p></div>
+    </div>
+    <div class="vid-card">
+      <video src="smp-sama.mp4" poster="smp-sama.jpg" controls playsinline preload="metadata"></video>
+      <div class="vid-cap"><div class="gal-type">Client Story</div><div class="gal-title">The Full Journey</div><p class="vid-desc">From consultation to treatment to the final result, hear it from a client in her own words.</p></div>
+    </div>
+    <div class="vid-card">
+      <video src="results.mp4" poster="results.jpg" controls playsinline preload="metadata"></video>
+      <div class="vid-cap"><div class="gal-type">Meet Sama</div><div class="gal-title">Artistry Meets Precision</div><p class="vid-desc">Sama explains her approach to SMP and why every hairline is designed for the client in front of her.</p></div>
+    </div>
+  </div>
+
+  <h3 class="vid-sub">Men's SMP, <em>No More Hiding</em></h3>
+  <div class="vid-duo">
+    <div class="vid-card">
+      <div class="vid-photo">
+        <img src="mens-before-after.jpg" alt="Men's scalp micropigmentation before and after" loading="lazy">
+        <span class="vid-lbl l">Before</span><span class="vid-lbl r">After</span>
+      </div>
+      <div class="vid-cap"><p class="vid-quote">"No pain, no more powder, no more hiding under a hat."</p><p class="vid-desc">His words, his SMP experience: thinning crown and hairline restored with natural-looking density.</p></div>
+    </div>
+    <div class="vid-card">
+      <video src="mens-story.mp4" poster="mens-story.jpg" controls playsinline preload="metadata"></video>
+      <div class="vid-cap"><div class="gal-type">Client Story</div><div class="gal-title">His SMP Transformation</div><p class="vid-desc">Walk in, before, after. See the full result.</p></div>
+    </div>
+  </div>
+
+  <div class="studio-band">
+    <img src="studio.jpg" alt="Sama performing SMP in the Beverly Hills studio" loading="lazy">
+    <div class="studio-txt">
+      <div class="sec-tag">Inside the Studio</div>
+      <h3 class="sec-h">Private, Calm, <em>Precise</em></h3>
+      <p class="about-body">Every session happens one-on-one in a private Beverly Hills studio, with professional lighting and sterile, single-use tools.</p>
+      <p class="about-body">Sama designs each hairline and density pattern by hand to suit your face, skin tone and natural hair.</p>
+      <div class="studio-addr">Beverly Hills · By Appointment Only</div>
+    </div>
+  </div>
+
+  <h3 class="vid-sub">In the <em>Chair</em></h3>
+  <div class="chair-grid">
+    <div class="chair-card"><img src="session-1.jpg" alt="SMP artist working with precision" loading="lazy"></div>
+    <div class="chair-card"><img src="session-3.jpg" alt="Sama performing SMP on a client" loading="lazy"></div>
+  </div>
+
+  <div class="vid-cta">
+    <a href="sms:+13102668138?&amp;body=Hi%20Sama%2C%20I%20would%20like%20a%20free%20SMP%20consultation." class="btn-gold">Text for a Free Consultation</a>
+    <a href="https://www.instagram.com/beverlyhills.smp/" target="_blank" rel="noopener" class="btn-ghost">Follow @beverlyhills.smp</a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec-wrap dark" id="process">
+  <div><div class="sec-tag">How It Works</div><h2 class="sec-h" style="margin-bottom:60px;">Your <em>Journey</em></h2></div>
+  <div class="process-steps">
+    <div class="step"><span class="step-num">01</span><div class="step-bar"></div><div class="step-title">Consultation</div><div class="step-desc">A private session to understand your goals, assess your scalp, and design your ideal result.</div></div>
+    <div class="step"><span class="step-num">02</span><div class="step-bar"></div><div class="step-title">Design</div><div class="step-desc">Custom hairline mapping with pigment shades matched precisely to your hair color and skin tone.</div></div>
+    <div class="step"><span class="step-num">03</span><div class="step-bar"></div><div class="step-title">Treatment</div><div class="step-desc">Your SMP session performed with meticulous care over one to three appointments.</div></div>
+    <div class="step"><span class="step-num">04</span><div class="step-bar"></div><div class="step-title">Aftercare</div><div class="step-desc">Detailed aftercare protocol and complimentary follow-up review included.</div></div>
+  </div>
+</section>
+
+<!-- IN ACTION -->
+<section class="sec-wrap" id="action">
+  <div class="sec-header">
+    <div><div class="sec-tag">Behind the Work</div><h2 class="sec-h">In <em>Session</em></h2></div>
+  </div>
+  <div class="action-grid">
+    <div class="act-card"><img loading="lazy" src="img-2.jpg" alt="Sama in session"><div class="act-num">01</div></div>
+    <div class="act-card"><img loading="lazy" src="img-1.jpg" alt="Sama working closeup"><div class="act-num">02</div></div>
+    <div class="act-card"><img loading="lazy" src="img-7.jpg" alt="Sama with mentor"><div class="act-num">03</div></div>
+    <div class="act-card"><img loading="lazy" src="img-8.jpg" alt="PMU training"><div class="act-num">04</div></div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-sec" id="contact">
+  <div class="sec-tag">Beverly Hills SMP Studio</div>
+  <h2 class="cta-h">Begin Your <em>Transformation</em></h2>
+  <p class="cta-sub">Text us anytime for your complimentary consultation — by appointment only.</p>
+  <div class="cta-contacts">
+    <div class="cta-card"><div class="cta-card-lbl">Phone</div><div class="cta-card-val">310.266.8138</div></div>
+    <div class="cta-card"><div class="cta-card-lbl">Email</div><div class="cta-card-val">BeverlyHillsSMP@gmail.com</div></div>
+    <div class="cta-card"><div class="cta-card-lbl">Instagram</div><div class="cta-card-val">@beverlyhills.smp</div></div>
+  </div>
+  <a href="sms:+13102668138?&amp;body=Hi%20Sama%2C%20I%20would%20like%20a%20free%20SMP%20consultation." class="btn-gold" style="font-size:11px;padding:16px 44px;">Text to Book</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Beverly Hills SMP Studio</div>
+      <div class="footer-logo-sub">Sama Jafari · Luxury SMP Artist</div>
+      <p class="footer-tagline">Premium scalp micropigmentation for those who demand natural, precise, undetectable results.</p>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Studio</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Sama</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#process">Our Process</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Hairline Restoration</a></li>
+        <li><a href="#services">Density Fill</a></li>
+        <li><a href="#services">Alopecia SMP</a></li>
+        <li><a href="#services">Scar Camouflage</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:3102668138">310.266.8138</a></li>
+        <li><a href="mailto:BeverlyHillsSMP@gmail.com">BeverlyHillsSMP@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/beverlyhills.smp/" target="_blank" rel="noopener">@beverlyhills.smp</a></li>
+        <li><a href="#contact">Book Consultation</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Beverly Hills SMP Studio · beverlyhillssmpstudio.com</span>
+    <span class="footer-motto">Precision. Artistry. Confidence.</span>
+  </div>
+</footer>
+
+<!-- CONTACT BAR -->
+<div class="cbar">
+  <a class="cb-text" href="sms:+13102668138?&amp;body=Hi%20Sama%2C%20I%20saw%20your%20SMP%20ad%20and%20would%20like%20a%20free%20consultation.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text Sama</a>
+  <a class="cb-call" href="tel:+13102668138">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Call</a>
+  <a class="cb-ig" href="https://ig.me/m/beverlyhills.smp" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>DM</a>
+</div>
+
+<script>
+window.addEventListener('load',()=>{
+  setTimeout(()=>{document.getElementById('loader').classList.add('hide');},2200);
+});
+</script>
+</body>
+</html>
